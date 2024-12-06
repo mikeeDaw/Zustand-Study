@@ -27,6 +27,23 @@
 
 - `npm i zustand`
 
+### Guidelines for performance
+
+1. Be specific on what slices you want to subscribe.
+
+- `const { count } = useCounterStore((state) => state);`
+  - Even if the "count" slice is the only one you need, the component still subscribed to the whole state because of what you returned on the selector function. And can cause rerenders if any of the state changes.
+  - `const { count } = useCounterStore((state) => state.count);` is way performant.
+
+2. Group stores by specific Features.
+
+- Ex: `Count` store has its value, increment, and decrement functions.
+- makes it more modular
+
+3. Do not have a one-for-all store or giant stores.
+
+- It is a nightmare to maintain and will not scale well.
+
 ## Steps / Topics
 
 - Create a "Store" - `store.tsx`
@@ -35,4 +52,4 @@
 - Using Actons - `CountingMachine.tsx`
 - Updating the State - `store.tsx`
 - Async Actions - `store.tsx` & `CountingMachine.tsx`
-- Using the Store outside components
+- Using the Store outside components - `CountingMachine.tsx`
